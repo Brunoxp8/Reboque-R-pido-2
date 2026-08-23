@@ -58,14 +58,37 @@
 		});
 	}
 
+	function initOrderSubmit() {
+		$$('form').forEach((form) => {
+			form.addEventListener('submit', (event) => {
+				const formData = new FormData(form);
+				const entries = [];
+
+				for (const [key, value] of formData.entries()) {
+					const label = key.replace(/\[_-]+/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase());
+					entries.push(`${label}: ${value}`);
+				}
+
+				if (!entries.length) return;
+
+				event.preventDefault();
+				const subject = encodeURIComponent('Novo pedido');
+				const body = encodeURIComponent(`Informações do pedido:\n\n${entries.join('\n')}`);
+				window.location.href = `mailto:brodgemmvj@gmail.com?subject=${subject}&body=${body}`;
+			});
+		});
+	}
+
 	function init() {
 		initMenu();
 		initSmoothScroll();
 		initAccordions();
 		initPhoneLinks();
+		initOrderSubmit();
 	}
 
 	document.readyState === 'loading'
 		? document.addEventListener('DOMContentLoaded', init)
 		: init();
 })();
+

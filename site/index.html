@@ -25,7 +25,7 @@
 		.card { padding: 2rem; border-radius: 16px; background: white; color: var(--text); box-shadow: 0 18px 45px #071d3338; }
 		.card h2 { margin-top: 0; color: var(--blue); }
 		.card p { line-height: 1.5; }
-		.phone { display: block; margin-top: 1.2rem; color: var(--blue); font-size: 1.5rem; font-weight: bold; text-decoration: none; }
+		.phone { display: block; margin-top: 1.2rem; color: var(--yellow); font-size: 2.2rem; font-weight: bold; text-decoration: none; }
 		section { width: min(1100px, 92%); margin: auto; padding: 4rem 0; text-align: center; }
 		section h2 { color: var(--blue); font-size: 2rem; }
 		.services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 2rem; }
@@ -49,14 +49,13 @@
 <body>
 	<header>
 		<nav>
-			<div class="logo">REBOQUE <span>RÀPIDO</span></div>
-			<div><a href="#inicio">Início</a><a href="#pedido">Pedido</a><a href="#contato">Contato</a></div>
+			<div class="logo">REBOQUE <span>RÁPIDO</span></div>
+			<div><a href="#inicio">Início</a><a href="#pedido">Pedido</a></div>
 		</nav>
 		<div class="tabs" role="tablist" aria-label="Navegação principal">
 			<button class="tab active" role="tab" aria-selected="true" data-tab="inicio">Início</button>
 			<button class="tab" role="tab" aria-selected="false" data-tab="pedido">Pedido de reboque</button>
 			<button class="tab" role="tab" aria-selected="false" data-tab="servicos">Serviços</button>
-			<button class="tab" role="tab" aria-selected="false" data-tab="contato">Contato</button>
 		</div>
 		<div class="hero">
 			<div id="inicio">
@@ -65,13 +64,8 @@
 				<p>Somos uma empresa especializada em serviços de reboque e assistência veicular, oferecendo atendimento rápido, seguro e eficiente. Nossa equipe está preparada para ajudar em situações de pane, acidentes, veículos parados ou qualquer outra necessidade de transporte.</p>
 				<p>Trabalhamos com compromisso, responsabilidade e cuidado com o seu veículo, buscando proporcionar tranquilidade e segurança em todos os atendimentos.</p>
 				<p>Precisou de reboque? Conte com a nossa equipe para chegar até você.</p>
-				<a class="button" href="tel:+5581984851243">Solicitar reboque</a>
-			</div>
-			<div class="card" id="contato">
-				<h2>Precisa de ajuda agora?</h2>
-				<p>Conte com nossa equipe para pane, acidente, bateria descarregada ou transporte de veículos.</p>
-				<a class="phone" href="tel:+5581984851243">☎ (81) 98485-1243</a>
-				<small>Atendimento 24 horas, todos os dias.</small>
+				<a class="button" href="#pedido" onclick="document.querySelector('[data-tab=&quot;pedido&quot;]').click();">Solicitar reboque</a>
+				<a class="phone" href="tel:+5581984851243">+55 81 98485-1243</a>
 			</div>
 		</div>
 	</header>
@@ -79,12 +73,15 @@
 		<section class="tab-panel" id="pedido">
 			<div class="form-card">
 				<h2>Solicite seu reboque</h2>
-				<form onsubmit="event.preventDefault(); alert('Pedido enviado! Entraremos em contato em breve.');">
+				<form onsubmit="event.preventDefault(); var dados = new FormData(this); var assunto = encodeURIComponent('Novo pedido de reboque - ' + dados.get('Nome')); var corpo = encodeURIComponent('Nome: ' + dados.get('Nome') + '\nTelefone: ' + dados.get('Telefone') + '\nTipo de atendimento: ' + dados.get('Tipo de atendimento') + '\nLocalização: ' + dados.get('Localização') + '\nObservações: ' + (dados.get('Observações') || 'Não informado')); window.location.href = 'mailto:brodgemmvj@gmail.com?subject=' + assunto + '&body=' + corpo;">
 					<div class="form-grid">
 						<label class="form-group">Nome<input type="text" required placeholder="Seu nome"></label>
 						<label class="form-group">Telefone<input type="tel" required placeholder="(81) 99999-9999"></label>
 						<label class="form-group">Tipo de atendimento<select required><option value="">Selecione</option><option>Pane mecânica</option><option>Acidente</option><option>Bateria descarregada</option><option>Transporte de veículo</option></select></label>
-						<label class="form-group">Localização<input type="text" required placeholder="Endereço ou ponto de referência"></label>
+						<label class="form-group">Localização
+							<input id="localizacao" type="text" required placeholder="Clique para informar sua localização" readonly>
+							<button class="button location-button" type="button" id="usar-localizacao">Usar minha localização no Google Maps</button>
+						</label>
 						<label class="form-group full">Observações<textarea placeholder="Como podemos ajudar?"></textarea></label>
 					</div>
 					<button class="button submit" type="submit">Enviar pedido</button>
@@ -98,14 +95,7 @@
 				<div class="service"><strong>🛡️ Transporte seguro</strong>Equipamentos adequados e profissionais treinados.</div>
 				<div class="service"><strong>🕐 24 horas</strong>Suporte quando você mais precisar.</div>
 			</div>
-		</section>
-		<section class="tab-panel" id="contato">
-			<div class="form-card contact-info">
-				<h2>Entre em contato</h2>
-				<p>Estamos disponíveis 24 horas por dia, todos os dias.</p>
-				<p><strong>Telefone:</strong> <a class="phone" href="tel:+5581984851243">(81) 98485-1243</a></p>
-				<p><strong>E-mail:</strong> contato@reboquerapido.com.br</p>
-			</div>
+			<a class="button" href="#pedido" onclick="document.querySelector('[data-tab=\"pedido\"]').click();">Solicitar reboque</a>
 		</section>
 	</main>
 	<script>
@@ -117,6 +107,22 @@
 				tab.setAttribute('aria-selected', 'true');
 				document.getElementById(tab.dataset.tab).classList.add('active');
 			});
+		});
+
+		document.getElementById('usar-localizacao').addEventListener('click', function () {
+			var campo = document.getElementById('localizacao');
+			if (!navigator.geolocation) {
+				alert('Seu navegador não oferece suporte à localização.');
+				return;
+			}
+			navigator.geolocation.getCurrentPosition(function (posicao) {
+				var latitude = posicao.coords.latitude;
+				var longitude = posicao.coords.longitude;
+				campo.value = latitude + ', ' + longitude;
+				window.open('https://www.google.com/maps/search/?api=1&query=' + latitude + ',' + longitude, '_blank', 'noopener');
+			}, function () {
+				alert('Não foi possível obter sua localização. Permita o acesso à localização e tente novamente.');
+			}, { enableHighAccuracy: true, timeout: 10000 });
 		});
 	</script>
 	<footer>© 2026 Reboque Rápido · Segurança e confiança na estrada.</footer>

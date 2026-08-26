@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Reboque rápido e seguro 24 horas.">
+	<title>Reboque Rápido | Assistência 24 horas</title>
+	<style>
+		:root { --blue: #123b66; --yellow: #ffca28; --light: #f5f8fc; --text: #203047; }
+		* { box-sizing: border-box; }
+		html { scroll-behavior: smooth; }
+		body { margin: 0; font-family: Arial, sans-serif; color: var(--text); background: var(--light); }
+		body { animation: pageFadeIn .5s ease both; }
+		@keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
+		header { background: var(--blue); color: white; }
+		nav { width: min(1100px, 92%); margin: auto; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 0; }
+		.logo { font-size: 1.35rem; font-weight: 800; letter-spacing: .03em; }
+		.logo span { color: var(--yellow); }
+		nav a { color: white; text-decoration: none; margin-left: 1.5rem; font-weight: bold; }
+		.tabs { width: min(1100px, 92%); margin: auto; display: flex; gap: .5rem; flex-wrap: wrap; padding-bottom: 1rem; }
+		.tab { border: 0; padding: .75rem 1rem; border-radius: 8px; background: transparent; color: white; font: inherit; font-weight: bold; cursor: pointer; }
+		.tab:hover, .tab.active { background: var(--yellow); color: #16283e; }
+		.hero { width: min(1100px, 92%); margin: auto; display: grid; grid-template-columns: 1.2fr .8fr; gap: 3rem; align-items: center; padding: 6rem 0; }
+		.hero h1 { margin: 0 0 1rem; font-size: clamp(2.5rem, 6vw, 4.8rem); line-height: 1.05; }
+		.hero p { font-size: 1.15rem; line-height: 1.6; max-width: 560px; color: #dbeafe; }
+		.button { display: inline-block; margin-top: 1rem; padding: 1rem 1.5rem; border-radius: 8px; background: var(--yellow); color: #16283e; font-weight: bold; text-decoration: none; }
+		.card { padding: 2rem; border-radius: 16px; background: white; color: var(--text); box-shadow: 0 18px 45px #071d3338; }
+		.card h2 { margin-top: 0; color: var(--blue); }
+		.card p { line-height: 1.5; }
+		.phone { display: block; margin-top: 1.2rem; color: var(--yellow); font-size: 2.2rem; font-weight: bold; text-decoration: none; }
+		section { width: min(1100px, 92%); margin: auto; padding: 4rem 0; text-align: center; }
+		section h2 { color: var(--blue); font-size: 2rem; }
+		.services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 2rem; }
+		.service { padding: 1.5rem; border-radius: 12px; background: white; box-shadow: 0 8px 25px #1e3a8a12; }
+		.service strong { display: block; margin-bottom: .6rem; color: var(--blue); font-size: 1.1rem; }
+		.services-image { display: block; width: 100%; max-width: 900px; height: auto; margin: 1.5rem auto 0; border-radius: 16px; box-shadow: 0 8px 25px #1e3a8a22; }
+		.services-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; max-width: 900px; margin: 1.5rem auto 0; }
+		.services-gallery .services-image { width: 100%; height: 210px; margin: 0; object-fit: cover; transition: transform .2s ease, box-shadow .2s ease; }
+		.services-gallery .services-image:hover { transform: translateY(-4px); box-shadow: 0 12px 28px #1e3a8a35; }
+		.services-gallery .services-image { cursor: zoom-in; }
+		.image-modal { width: min(92vw, 1100px); max-width: none; padding: 1rem; border: 0; border-radius: 12px; background: #fff; box-shadow: 0 18px 60px #071d3399; }
+		.image-modal::backdrop { background: #071d33cc; }
+		.image-modal img { display: block; width: 100%; max-height: 80vh; object-fit: contain; }
+		.image-modal-close { display: block; margin-left: auto; border: 0; padding: .25rem .65rem; background: transparent; color: var(--blue); font-size: 1.8rem; line-height: 1; cursor: pointer; }
+		.tab-panel { display: none; opacity: 1; transition: opacity .2s ease; }
+		.tab-panel.active { display: block; animation: panelReveal .35s ease both; }
+		.tab-panel.active.visible { opacity: 1; }
+		@keyframes panelReveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+		.form-card { max-width: 700px; margin: auto; padding: 2rem; border-radius: 16px; background: white; box-shadow: 0 8px 25px #1e3a8a12; text-align: left; }
+		.form-card h2 { margin-top: 0; }
+		.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+		.form-group { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1rem; }
+		.form-group.full { grid-column: 1 / -1; }
+		.form-group input, .form-group select, .form-group textarea { width: 100%; padding: .8rem; border: 1px solid #cbd5e1; border-radius: 7px; font: inherit; }
+		.form-group textarea { min-height: 100px; resize: vertical; }
+		.submit { border: 0; cursor: pointer; font-size: 1rem; }
+		.contact-info { line-height: 1.8; }
+		footer { padding: 1.5rem; text-align: center; color: white; background: #0b2846; }
+		@media (max-width: 700px) { nav a { display: none; } .hero { grid-template-columns: 1fr; padding: 4rem 0; } .services { grid-template-columns: 1fr; } .services-gallery { grid-template-columns: 1fr; } .services-gallery .services-image { height: 230px; } .form-grid { grid-template-columns: 1fr; } .form-group.full { grid-column: auto; } }
+	</style>
+</head>
+<body>
+	<header>
+		<nav>
+			<div class="logo">REBOQUE <span>RÁPIDO</span></div>
+			<div><a href="#inicio" data-tab-link="inicio">Início</a><a href="#pedido" data-tab-link="pedido">Pedido</a></div>
+		</nav>
+		<div class="tabs" role="tablist" aria-label="Navegação principal">
+			<button class="tab active" role="tab" aria-selected="true" data-tab="inicio">Início</button>
+			<button class="tab" role="tab" aria-selected="false" data-tab="pedido">Pedido de reboque</button>
+			<button class="tab" role="tab" aria-selected="false" data-tab="servicos">Serviços</button>
+		</div>
+		<div class="hero">
+			<div class="tab-panel active visible" id="inicio" role="tabpanel">
+				<h1>Seu veículo em boas mãos.</h1>
+				<p>Reboque rápido, seguro e confiável para você não ficar parado. Atendimento 24 horas em toda a região.</p>
+				<p>Somos uma empresa especializada em serviços de reboque e assistência veicular, oferecendo atendimento rápido, seguro e eficiente. Nossa equipe está preparada para ajudar em situações de pane, acidentes, veículos parados ou qualquer outra necessidade de transporte.</p>
+				<p>Trabalhamos com compromisso, responsabilidade e cuidado com o seu veículo, buscando proporcionar tranquilidade e segurança em todos os atendimentos.</p>
+				<p>Precisou de reboque? Conte com a nossa equipe para chegar até você.</p>
+				<a class="button" href="#pedido" onclick="document.querySelector('[data-tab=&quot;pedido&quot;]').click(); document.getElementById('pedido').scrollIntoView({ behavior: 'smooth', block: 'start' });">Solicitar reboque</a>
+				<a class="phone" href="tel:+5581984851243">+55 81 98485-1243</a>
+			</div>
+		</div>
+	</header>
+	<main>
+		<section class="tab-panel" id="pedido" role="tabpanel">
+			<div class="form-card">
+				<h2>Solicite seu reboque</h2>
+				<form onsubmit="event.preventDefault(); var dados = new FormData(this); var assunto = encodeURIComponent('Novo pedido de reboque - ' + dados.get('Nome')); var corpo = encodeURIComponent('Nome: ' + dados.get('Nome') + '\nTelefone: ' + dados.get('Telefone') + '\nTipo de atendimento: ' + dados.get('Tipo de atendimento') + '\nLocalização: ' + dados.get('Localização') + '\nObservações: ' + (dados.get('Observações') || 'Não informado')); window.location.href = 'mailto:brodgemmvj@gmail.com?subject=' + assunto + '&body=' + corpo;">
+					<div class="form-grid">
+						<label class="form-group">Nome<input name="Nome" type="text" required placeholder="Seu nome"></label>
+						<label class="form-group">Telefone<input name="Telefone" type="tel" required placeholder="(81) 99999-9999"></label>
+						<label class="form-group">Tipo de atendimento<select name="Tipo de atendimento" required><option value="">Selecione</option><option>Pane mecânica</option><option>Acidente</option><option>Bateria descarregada</option><option>Transporte de veículo</option></select></label>
+						<label class="form-group">Localização
+							<input id="localizacao" name="Localização" type="text" required placeholder="Informe sua localização ou use o botão">
+							<button class="button location-button" type="button" id="usar-localizacao">Usar minha localização no Google Maps</button>
+						</label>
+						<label class="form-group full">Observações<textarea name="Observações" placeholder="Como podemos ajudar?"></textarea></label>
+					</div>
+					<button class="button submit" type="submit">Enviar pedido</button>
+				</form>
+			</div>
+		</section>
+		<section class="tab-panel" id="servicos" role="tabpanel">
+			<h2>Por que escolher a Reboque Rápido?</h2>
+			<div class="services-gallery" aria-label="Galeria de serviços de reboque">
+				<img class="services-image" src="reboque.jpg" alt="Reboque transportando um veículo na estrada" tabindex="0" role="button">
+				<img class="services-image" src="reboque_2.jpg" alt="Caminhão-guincho transportando um carro em uma estrada" tabindex="0" role="button">
+				<img class="services-image" src="reboque_3.jpg" alt="Caminhão-guincho transportando um carro em uma avenida" tabindex="0" role="button">
+				<img class="services-image" src="reboque_4.jpg" alt="Caminhão-guincho transportando um carro ao pôr do sol" tabindex="0" role="button">
+				<img class="services-image" src="reboque_5.jpg" alt="Profissional prendendo o veículo no caminhão-guincho" tabindex="0" role="button">
+				<img class="services-image" src="reboque_6.jpg" alt="Caminhão-guincho transportando um veículo na estrada" tabindex="0" role="button">
+			</div>
+			<div class="services">
+				<div class="service"><strong>⚡ Atendimento rápido</strong>Chegamos até você com agilidade.</div>
+				<div class="service"><strong>🛡️ Transporte seguro</strong>Equipamentos adequados e profissionais treinados.</div>
+				<div class="service"><strong>🕐 24 horas</strong>Suporte quando você mais precisar.</div>
+			</div>
+		</section>
+		<dialog class="image-modal" id="image-modal" aria-label="Imagem ampliada">
+			<button class="image-modal-close" type="button" aria-label="Fechar imagem ampliada">&times;</button>
+			<img src="" alt="">
+		</dialog>
+	</main>
+	<script>
+		(function () {
+			var abas = document.querySelectorAll('.tab');
+			var paineis = document.querySelectorAll('.tab-panel');
+
+			function abrirAba(id) {
+				var aba = document.querySelector('.tab[data-tab="' + id + '"]');
+				var painel = document.getElementById(id);
+				if (!aba || !painel) return;
+
+				abas.forEach(function (item) {
+					var ativa = item === aba;
+					item.classList.toggle('active', ativa);
+					item.setAttribute('aria-selected', String(ativa));
+				});
+				paineis.forEach(function (item) {
+					item.classList.toggle('active', item === painel);
+					item.classList.toggle('visible', item === painel);
+				});
+			}
+
+			abas.forEach(function (aba) {
+				aba.addEventListener('click', function () { abrirAba(aba.dataset.tab); });
+			});
+			document.querySelectorAll('[data-tab-link]').forEach(function (link) {
+				link.addEventListener('click', function (event) {
+					event.preventDefault();
+					abrirAba(link.dataset.tabLink);
+				});
+			});
+
+			document.getElementById('usar-localizacao').addEventListener('click', function () {
+				var campo = document.getElementById('localizacao');
+				if (!navigator.geolocation) {
+					alert('Seu navegador não oferece suporte à localização.');
+					return;
+				}
+				navigator.geolocation.getCurrentPosition(function (posicao) {
+					var latitude = posicao.coords.latitude;
+					var longitude = posicao.coords.longitude;
+					campo.value = latitude + ', ' + longitude;
+					window.open('https://www.google.com/maps/search/?api=1&query=' + latitude + ',' + longitude, '_blank', 'noopener');
+				}, function () {
+					alert('Não foi possível obter sua localização. Permita o acesso e tente novamente.');
+				}, { enableHighAccuracy: true, timeout: 10000 });
+			});
+
+				var modal = document.getElementById('image-modal');
+				var modalImage = modal.querySelector('img');
+				var modalClose = modal.querySelector('.image-modal-close');
+				document.querySelectorAll('.services-gallery .services-image').forEach(function (imagem) {
+					function ampliarImagem() {
+						modalImage.src = imagem.src;
+						modalImage.alt = imagem.alt;
+						modal.showModal();
+					}
+					imagem.addEventListener('click', ampliarImagem);
+					imagem.addEventListener('keydown', function (event) {
+						if (event.key === 'Enter' || event.key === ' ') {
+							event.preventDefault();
+							ampliarImagem();
+						}
+					});
+				});
+				modalClose.addEventListener('click', function () { modal.close(); });
+				modal.addEventListener('click', function (event) {
+					if (event.target === modal) modal.close();
+				});
+		})();
+
+	</script>
+	<footer>© 2026 Reboque Rápido · Segurança e confiança na estrada.</footer>
+</body>
+</html>
